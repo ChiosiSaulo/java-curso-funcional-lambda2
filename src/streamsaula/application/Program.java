@@ -2,6 +2,7 @@ package streamsaula.application;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Program {
@@ -12,20 +13,18 @@ public class Program {
 		
 		Stream<Integer> st1 = list.stream().map(x -> x * 10);
 		System.out.println(Arrays.toString(st1.toArray()));
-		//[30, 40, 50, 100, 70] 
+		//[30, 40, 50, 100, 70]
 		
-		Stream<String> st2 = Stream.of("Maria" , "Alex", "Bob");
-		System.out.println(Arrays.toString(st2.toArray()));
-		//[Maria, Alex, Bob]
+		int sum = list.stream().reduce(0, (x, y) -> x + y);
+		System.out.println("Sum = " + sum);
+		//Sum = 29
 		
-		Stream<Integer> st3 = Stream.iterate(0, x -> x + 2);
-		System.out.println(Arrays.toString(st3.limit(10).toArray()));
-		//[0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
-		
-		//fibonacci
-		Stream<Long> st4 = Stream.iterate(new Long[] {0L, 1L}, p -> new Long[] {p[1], p[0]+p[1]}).map(p -> p[0]);
-		System.out.println(Arrays.toString(st4.limit(10).toArray()));
-		//[0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+		List<Integer> newList = list.stream()
+				.filter(x -> x % 2 == 0)
+				.map(x -> x * 10)
+				.collect(Collectors.toList());
+		System.out.println(Arrays.toString(newList.toArray()));
+		//[40, 100]
 	}
 
 }
